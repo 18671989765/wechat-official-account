@@ -1,11 +1,10 @@
-# spring.application.name=wechat-officcial-account
-# management.endpoints.jmx.exposure.include=*
-# management.endpoints.web.exposure.include=*
-# management.endpoint.health.show-details=always
-# spring cloud access&secret config
-# 可以访问如下地址查看: https://usercenter.console.aliyun.com/#/manage/ak
-# alibaba.cloud.access-key=****
-# alibaba.cloud.secret-key=****
 
+#微信公众号配置如下
+wx:
+  appId: wxb828d2805cf8f3d5
+  appSecret: 60d87b98afa1a650512a26342839130a
+  token: wxb828d2805cf8f3d5
+  aesKey: # =如果选择安全模式，需要填入。如果是明文模式，填空就好了
+  mchId: #商户ID
 
 
