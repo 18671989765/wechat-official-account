@@ -1,3 +1,22 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: wechat
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+
+
+
+
 #微信公众号配置如下 natapp中对外的web域名 要做hosts文件中做映射
 wx:
   appId: wxc2ab8b2eaa6f2db2
@@ -6,5 +25,4 @@ wx:
   token: antgan
   aesKey: #5wUYxa1veC45VwT7KmcTOSkMRaXRVS1ngcKiikeYgmM # =如果选择安全模式，需要填入。如果是明文模式，填空就好了
   mchId: #商户ID
-
 
