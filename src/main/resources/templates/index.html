@@ -5,8 +5,73 @@
 </head>
 <body>
 <div>
+    <h4>点击下面图片，帮我砍一刀</h4>
     <img src="https://img.it610.com/image/product/97682b999400457bb48c53d468b06df4.jpg">
 
 </div>
 </body>
+<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>　
+<script>
+    // 初始化
+
+    wx.config({
+        debug: false,
+        appId: '{$weixin.appId}',
+        timestamp: '{$weixin.timestamp}',
+        nonceStr: '{$weixin.nonceStr}',
+        signature: '{$weixin.signature}',
+        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
+    });
+
+    // 处理分享
+    wx.ready(function () {
+        // 在页面加载时就调用相关接口，如：分享到朋友圈、获取位置信息等接口
+        wx.checkJsApi({
+            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'],
+            success: function (res) {
+                if (res.errMsg == 'checkJsApi:ok') {
+                    // 分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: '{$vote_info.title}', // 分享标题
+                        desc: '{$vote_info.sub_title}', // 分享描述
+                        link: '{$share_url}', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: '{$vote_info.share_img}', // 分享图标
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        // 用户取消已经监听不到了，不管取消与否，都是成功的
+                        success: function () {
+                            alert("恭喜你，分享成功");
+                        },
+                        // 用户取消分享后执行的回调函数
+                        cancel: function () {
+                            alert("取消分享");
+                        }
+                    });
+                    // 分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: '{$vote_info.title}', // 分享时的标题
+                        link: '{$share_url}', // 分享时的链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: '{$vote_info.share_img}', // 分享时显示的图标
+                        // 用户取消已经监听不到了，不管取消与否，都是成功的
+                        success: function () {
+                            alert("恭喜你，分享成功");
+                        },
+                        // 用户取消分享后执行的回调函数
+                        cancel: function () {
+                            alert("取消分享");
+                        }
+                    });
+                } else {
+                    alert("失败了.......");
+                }
+            }
+        });
+    });
+
+    // 初始化错误监听
+    wx.error(function (res) {
+        alert("error");
+    });
+
+</script>
 </html>
