@@ -13,8 +13,11 @@ spring:
     encoding: utf-8
     servlet:
       content-type: text/html
-
-
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/wechatoffical?serverTimezone=UTC&characterEncoding=utf-8
 
 
 #微信公众号配置如下 natapp中对外的web域名 要做hosts文件中做映射

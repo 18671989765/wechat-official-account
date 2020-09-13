@@ -1,6 +1,6 @@
-package com.wechat.official.account.wechatofficcialaccount.wx.Common;
+package com.wechat.official.account.wechatofficcialaccount.config;
 
-import com.wechat.official.account.wechatofficcialaccount.wx.entry.AccessToken;
+import com.wechat.official.account.wechatofficcialaccount.entity.AccessToken;
 
 
 /**

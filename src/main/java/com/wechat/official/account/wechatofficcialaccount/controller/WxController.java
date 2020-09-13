@@ -17,6 +17,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * 这个方法专供微信回调用的
+ */
 @RestController
 @RequestMapping("/wx")
 public class WxController  {

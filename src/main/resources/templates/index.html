@@ -1,77 +1,159 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>砍价</title>
-</head>
-<body>
-<div>
-    <h4>点击下面图片，帮我砍一刀</h4>
-    <img src="https://img.it610.com/image/product/97682b999400457bb48c53d468b06df4.jpg">
-
-</div>
-</body>
-<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>　
-<script>
-    // 初始化
-
-    wx.config({
-        debug: false,
-        appId: '{$weixin.appId}',
-        timestamp: '{$weixin.timestamp}',
-        nonceStr: '{$weixin.nonceStr}',
-        signature: '{$weixin.signature}',
-        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
-    });
-
-    // 处理分享
-    wx.ready(function () {
-        // 在页面加载时就调用相关接口，如：分享到朋友圈、获取位置信息等接口
-        wx.checkJsApi({
-            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'],
-            success: function (res) {
-                if (res.errMsg == 'checkJsApi:ok') {
-                    // 分享给朋友
-                    wx.onMenuShareAppMessage({
-                        title: '{$vote_info.title}', // 分享标题
-                        desc: '{$vote_info.sub_title}', // 分享描述
-                        link: '{$share_url}', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: '{$vote_info.share_img}', // 分享图标
-                        type: '', // 分享类型,music、video或link，不填默认为link
-                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                        // 用户取消已经监听不到了，不管取消与否，都是成功的
-                        success: function () {
-                            alert("恭喜你，分享成功");
-                        },
-                        // 用户取消分享后执行的回调函数
-                        cancel: function () {
-                            alert("取消分享");
-                        }
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<title>帮我砍一刀</title>
+<meta charste="utf-8">
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var current_url = window.location.href;
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        getSign();
+    }
+    // getSign();
+    //分享
+    function getSign() {
+        //分享获取签名时间戳appid
+        $.ajax({
+            type: 'GET',
+            url: "http://n7p83q.natappfree.cc/sign",
+            async: false,
+            dataType: 'json',
+            data: {url: current_url},
+            success: function (data, textStatus) {
+                //console.log("data>>>",data);
+                //alert("data.signature>>>",data.signature);
+                console.log("data.appid>>>", data.appid);
+                console.log("data.timestamp>>>", data.timestamp);
+                console.log("data.noncestr>>>", data.noncestr);
+                console.log("data.signature>>>", data.signature);
+                if (textStatus == "success") {//success
+                    wx.config({
+                        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: data.appid, // 必填，公众号的唯一标识
+                        timestamp: data.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: data.noncestr, // 必填，生成签名的随机串
+                        signature: data.signature,// 必填，签名，见附录1
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'onMenuShareQZone'
+                        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                     });
-                    // 分享到朋友圈
-                    wx.onMenuShareTimeline({
-                        title: '{$vote_info.title}', // 分享时的标题
-                        link: '{$share_url}', // 分享时的链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: '{$vote_info.share_img}', // 分享时显示的图标
-                        // 用户取消已经监听不到了，不管取消与否，都是成功的
-                        success: function () {
-                            alert("恭喜你，分享成功");
-                        },
-                        // 用户取消分享后执行的回调函数
-                        cancel: function () {
-                            alert("取消分享");
-                        }
+                    wx.ready(function () {
+                        console.log("+++++++++++++++++++++========>>");
+                        share();
+                        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发>时才调用的接口，则可以直接调用，不需要放在ready函数中。
                     });
-                } else {
-                    alert("失败了.......");
                 }
             }
+        })
+    }
+
+    var title = "测试Title";
+    var content = "测试Content";
+    var shareImage = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg';
+
+    function share() {
+        //分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            desc: content, // 分享描述
+            link: current_url, // 分享链接
+            imgUrl: shareImage, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
         });
-    });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: title, // 分享标题
+            desc: content, // 分享描述
+            link: current_url, // 分享链接
+            imgUrl: shareImage, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log("分享成功========>>");
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log("分享成功========>>");
 
-    // 初始化错误监听
+            }
+        });
+        //分享到qq
+        wx.onMenuShareQQ({
+            title: title, // 分享标题
+            desc: content, // 分享描述
+            link: current_url, // 分享链接
+            imgUrl: shareImage, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享到qq空间
+        wx.onMenuShareQZone({
+            title: title, // 分享标题
+            desc: content, // 分享描述
+            link: current_url, // 分享链接
+            imgUrl: shareImage, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+    }
     wx.error(function (res) {
-        alert("error");
+        alert(res.errMsg);
     });
+    
+    function initiateBargainingBegin() {
+        $.ajax({
+            type: 'POST',
+            url: "http://6g23q4.natappfree.cc/initiateBargainingBegin",
+            async: false,
+            dataType: 'json',
+            data: {"openId":openId,"code":code},
+            success: function (data, textStatus) {
 
+            }
+        })
+    }
 </script>
+</head>
+
+<body>
+
+<h3>丹江口均州一路好家居商场</h3>
+<div>
+    <button>帮我砍一刀</button>
+    <div>
+        <h4>感谢：</h4>
+        <p th:text="|${name} 砍掉了 : ${money} 元|"> </p>
+    </div>
+<!--发起砍价前需要发送验证码验证码输入正确，才可以正常砍价-->
+
+    <h1>表单提交</h1>
+    <!-- 表单提交用户信息,注意字段的设置,直接是*{} -->
+<!--    <form action="#" th:action="@{/initiateBargainingBegin}" method="post">-->
+<!--        <input type="text" th:field="*{openId}" />-->
+<!--        <input type="text" th:field="*{code}" />-->
+<!--        <input type="submit" value="去砍价"/>-->
+<!--    </form>-->
+</div>
+
+</body>
 </html>

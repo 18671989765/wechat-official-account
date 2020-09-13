@@ -1,4 +1,4 @@
-package com.wechat.official.account.wechatofficcialaccount.wx.Common;
+package com.wechat.official.account.wechatofficcialaccount.enums;
 
 /**
  * 接收到的消息类型

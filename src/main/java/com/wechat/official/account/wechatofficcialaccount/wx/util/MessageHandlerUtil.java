@@ -1,10 +1,10 @@
 package com.wechat.official.account.wechatofficcialaccount.wx.util;
 
-import com.wechat.official.account.wechatofficcialaccount.wx.Common.MessageType;
-
+import com.wechat.official.account.wechatofficcialaccount.enums.MessageType;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
@@ -19,40 +19,9 @@ import java.util.Map;
  * 消息处理工具类
  * Created by xdp on 2016/1/26.
  */
+@Component
 public class MessageHandlerUtil {
 
-
-    /**
-     * 解析微信发来的请求（XML）
-     *
-     * @param request 封装了请求信息的HttpServletRequest对象
-     * @return map 解析结果
-     * @throws Exception
-     */
-    public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
-        // 将解析结果存储在HashMap中
-        Map<String, String> map = new HashMap<String, String>();
-        // 从request中取得输入流
-        InputStream inputStream = request.getInputStream();
-        // 读取输入流
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(inputStream);
-        // 得到xml根元素
-        Element root = document.getRootElement();
-        // 得到根元素的所有子节点
-        List<Element> elementList = root.elements();
-
-        // 遍历所有子节点
-        for (Element e : elementList) {
-            System.out.println(e.getName() + "|" + e.getText());
-            map.put(e.getName(), e.getText());
-        }
-
-        // 释放资源
-        inputStream.close();
-        inputStream = null;
-        return map;
-    }
 
     /**
      * 根据消息类型构造返回消息
@@ -106,6 +75,40 @@ public class MessageHandlerUtil {
         return responseMessage;
     }
 
+
+    /**
+     * 解析微信发来的请求（XML）
+     *
+     * @param request 封装了请求信息的HttpServletRequest对象
+     * @return map 解析结果
+     * @throws Exception
+     */
+    public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+        // 将解析结果存储在HashMap中
+        Map<String, String> map = new HashMap<String, String>();
+        // 从request中取得输入流
+        InputStream inputStream = request.getInputStream();
+        // 读取输入流
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(inputStream);
+        // 得到xml根元素
+        Element root = document.getRootElement();
+        // 得到根元素的所有子节点
+        List<Element> elementList = root.elements();
+
+        // 遍历所有子节点
+        for (Element e : elementList) {
+            System.out.println(e.getName() + "|" + e.getText());
+            map.put(e.getName(), e.getText());
+        }
+
+        // 释放资源
+        inputStream.close();
+        inputStream = null;
+        return map;
+    }
+
+
     /**
      * 接收到文本消息后处理
      * @param map 封装了解析结果的Map
@@ -119,12 +122,12 @@ public class MessageHandlerUtil {
         switch (content) {
             case "文本":
                 String msgText = "帮我砍砍价\n" +
-                        "<a href=\"http://njts6m.natappfree.cc/index\">砍价</a>";
+                        "<a href=\"http://6g23q4.natappfree.cc/index\">砍价</a>";
                 responseMessage = buildTextMessage(map, msgText);
                 break;
             case "图片":
                 //通过素材管理接口上传图片时得到的media_id
-                String imgMediaId = "dSQCiEHYB-pgi7ib5KpeoFlqpg09J31H28rex6xKgwWrln3HY0BTsoxnRV-xC_SQ";
+                String imgMediaId = "hCzp3nLveXIo6WwSA090GLgTgqguYlsvtA2lRe6PTctv5YuGbKAxoxtEzMP7GRu1";
                 responseMessage = buildImageMessage(map, imgMediaId);
                 break;
             case "语音":
@@ -185,8 +188,10 @@ public class MessageHandlerUtil {
     private static String buildWelcomeTextMessage(Map<String, String> map) {
         String responseMessageXml;
         String fromUserName = map.get("FromUserName");
+        //保存用户信息
         // 开发者微信号
         String toUserName = map.get("ToUserName");
+        System.out.println("有新用户关注您了："+map);
         responseMessageXml = String
                 .format(
                         "<xml>" +
@@ -399,21 +404,21 @@ public class MessageHandlerUtil {
         // 开发者微信号
         String toUserName = map.get("ToUserName");
         NewsItem item = new NewsItem();
-        item.Title = "微信开发学习总结（一）——微信开发环境搭建";
-        item.Description = "工欲善其事，必先利其器。要做微信公众号开发，那么要先准备好两样必不可少的东西：\n" +
+        item.Title = "帮我砍一刀";
+        item.Description = "您的一刀看下去，我就可以离目标更近一步：\n" +
                 "\n" +
                 "　　1、要有一个用来测试的公众号。\n" +
                 "\n" +
                 "　　2、用来调式代码的开发环境";
-        item.PicUrl = "http://images2015.cnblogs.com/blog/289233/201601/289233-20160121164317343-2145023644.png";
-        item.Url = "http://www.cnblogs.com/xdp-gacl/p/5149171.html";
+        item.PicUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg";
+        item.Url = "http://n7p83q.natappfree.cc/index";
         String itemContent1 = buildSingleItem(item);
 
         NewsItem item2 = new NewsItem();
-        item2.Title = "微信开发学习总结（二）——微信开发入门";
-        item2.Description = "微信服务器就相当于一个转发服务器，终端（手机、Pad等）发起请求至微信服务器，微信服务器然后将请求转发给我们的应用服务器。应用服务器处理完毕后，将响应数据回发给微信服务器，微信服务器再将具体响应信息回复到微信App终端。";
-        item2.PicUrl = "";
-        item2.Url = "http://www.cnblogs.com/xdp-gacl/p/5151857.html";
+        item2.Title = "我在好家居商城买家居，帮我砍一刀价格";
+        item2.Description = "我丹江口均州一路好家居商场购买家居，帮我砍一下价格";
+        item.PicUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg";
+        item.Url = "http://n7p83q.natappfree.cc/index";
         String itemContent2 = buildSingleItem(item2);
 
 

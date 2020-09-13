@@ -2,8 +2,7 @@ package com.wechat.official.account.wechatofficcialaccount.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wechat.official.account.wechatofficcialaccount.wx.Common.AccessTokenInfo;
-import com.wechat.official.account.wechatofficcialaccount.wx.entry.AccessToken;
+import com.wechat.official.account.wechatofficcialaccount.entity.AccessToken;
 import com.wechat.official.account.wechatofficcialaccount.wx.util.NetWorkHelper;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -47,6 +46,7 @@ public class InitToken implements ApplicationListener<ContextRefreshedEvent>{
                         System.out.println("=================开始初始化====================");
                         //获取accessToken
                         AccessTokenInfo.accessToken = getAccessToken(appId, appSecret);
+                        System.out.println(AccessTokenInfo.accessToken.getAccessToken());
                         //获取成功
                         if (AccessTokenInfo.accessToken != null) {
                             //获取到access_token 休眠7000秒,大约2个小时左右
