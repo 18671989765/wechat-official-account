@@ -31,11 +31,12 @@ public class IndexController {
 
     Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    @GetMapping("/index")
-    public String index(Model map,HttpServletRequest request){
+    @GetMapping("/index/{fromUserName}")
+    public String index(@PathVariable("fromUserName")String fromUserName, Model map,HttpServletRequest request){
         //进来时，判断该用户是否有发起过砍价，如果发起过砍价，则将砍价列表返回
         Map<String,Object> receiveMap = getDataFromRequest(request);
         System.out.println("》》》》》》》》》》》》》》》打印请求中的参数》》》》》》》》》》》》》");
+        System.out.println(fromUserName);
         System.out.println(receiveMap);
 
         map.addAttribute("name","中华石杉");

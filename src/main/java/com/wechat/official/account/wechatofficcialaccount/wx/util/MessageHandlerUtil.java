@@ -120,7 +120,7 @@ public class MessageHandlerUtil {
         switch (content) {
             case "文本":
                 String msgText = "帮我砍砍价\n" +
-                        "<a href=\"http://6g23q4.natappfree.cc/index\">砍价</a>";
+                        "<a href=\"http://tnjvvj.natappfree.cc/index\">砍价</a>";
                 responseMessage = buildTextMessage(map, msgText);
                 break;
             case "图片":
@@ -409,14 +409,14 @@ public class MessageHandlerUtil {
                 "\n" +
                 "　　2、用来调式代码的开发环境";
         item.PicUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg";
-        item.Url = "http://n7p83q.natappfree.cc/index";
+        item.Url = "http://tnjvvj.natappfree.cc/index/"+fromUserName;
         String itemContent1 = buildSingleItem(item);
 
         NewsItem item2 = new NewsItem();
         item2.Title = "我在好家居商城买家居，帮我砍一刀价格";
         item2.Description = "我丹江口均州一路好家居商场购买家居，帮我砍一下价格";
         item.PicUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg";
-        item.Url = "http://n7p83q.natappfree.cc/index";
+        item.Url = "http://tnjvvj.natappfree.cc/index/"+fromUserName;
         String itemContent2 = buildSingleItem(item2);
 
 
