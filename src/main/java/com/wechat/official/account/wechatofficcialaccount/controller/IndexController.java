@@ -34,10 +34,10 @@ public class IndexController {
     @GetMapping("/index/{fromUserName}")
     public String index(@PathVariable("fromUserName")String fromUserName, Model map,HttpServletRequest request){
         //进来时，判断该用户是否有发起过砍价，如果发起过砍价，则将砍价列表返回
-        Map<String,Object> receiveMap = getDataFromRequest(request);
-        System.out.println("》》》》》》》》》》》》》》》打印请求中的参数》》》》》》》》》》》》》");
-        System.out.println(fromUserName);
-        System.out.println(receiveMap);
+        //用户进入砍价页面，携带了openId 即开始砍价，使用openId记录发起砍价数据
+        //发起砍价表，砍价表 如果两个表中都没有数据，则视为发起砍价，数据会存储在两个表
+
+
 
         map.addAttribute("name","中华石杉");
         map.addAttribute("money",20);
