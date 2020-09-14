@@ -1,14 +1,13 @@
 package com.wechat.official.account.wechatofficcialaccount.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.util.StringUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.wechat.official.account.wechatofficcialaccount.config.AccessTokenInfo;
 import com.wechat.official.account.wechatofficcialaccount.config.WaChatAppIdInfos;
 import com.wechat.official.account.wechatofficcialaccount.dto.initiateBargainingDto;
 import com.wechat.official.account.wechatofficcialaccount.util.JS_Sign;
 import com.wechat.official.account.wechatofficcialaccount.wx.util.HttpClientUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -53,7 +52,7 @@ public class IndexController {
      * @throws IOException
      */
     private Map<String,Object> getDataFromRequest(HttpServletRequest request){
-        Gson gson = new Gson();
+        JSONObject jsonObject = new JSONObject();
         String type = request.getContentType();
         Map<String,Object> receiveMap = new HashMap<String,Object>();
         if("application/x-www-form-urlencoded".equals(type)){
@@ -83,7 +82,7 @@ public class IndexController {
                     e.printStackTrace();
                 }
             }
-            receiveMap = gson.fromJson(sb.toString(), new TypeToken<Map<String, String>>(){}.getType());//把JSON字符串转为对象
+            receiveMap = JSONObject.toJavaObject(JSON.parseObject(sb.toString()),Map.class);//把JSON字符串转为对象
         }
         return receiveMap;
     }
@@ -179,7 +178,7 @@ public class IndexController {
          */
         log.info("通过code获取access_token:{}",jsonObject);
         String accessToken = (String) jsonObject.get("access_token");
-        if(StringUtil.isNotEmpty(accessToken)){
+        if(StringUtils.isNotEmpty(accessToken)){
             params = new HashMap<>();
             params.put("access_token",accessToken);
             params.put("openid",jsonObject.get("openid"));

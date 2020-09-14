@@ -4,7 +4,6 @@ import com.wechat.official.account.wechatofficcialaccount.enums.MessageType;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
@@ -19,7 +18,6 @@ import java.util.Map;
  * 消息处理工具类
  * Created by xdp on 2016/1/26.
  */
-@Component
 public class MessageHandlerUtil {
 
 

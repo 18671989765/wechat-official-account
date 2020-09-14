@@ -1,25 +1,10 @@
 package com.wechat.official.account.wechatofficcialaccount.util;
 
-import java.text.MessageFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.UUID;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Formatter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.URL;
+import com.alibaba.fastjson.JSONObject;
+import com.wechat.official.account.wechatofficcialaccount.config.WaChatAppIdInfos;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -27,14 +12,13 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
-import com.wechat.official.account.wechatofficcialaccount.config.WaChatAppIdInfos;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
-
-import com.alibaba.fastjson.JSONObject;
+import java.io.*;
+import java.net.ConnectException;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * @author Administrator
