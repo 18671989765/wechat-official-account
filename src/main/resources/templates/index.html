@@ -119,40 +119,39 @@
     // wx.error(function (res) {
     //     alert(res.errMsg);
     // });
-    
+
     function initiateBargainingBegin() {
         $.ajax({
             type: 'POST',
             url: "http://v3jmpw.natappfree.cc/initiateBargainingBegin",
             async: false,
             dataType: 'json',
-            data: {"openId":"123123123","authCode":"123123"},
+            data: {"openId": "123123123", "authCode": "123123"},
             success: function (data) {
                 // debugger;
                 console.log(data.price)
                 money = data.price;
                 window.location.reload()  //刷新页面
-                confirm("恭喜您为您的朋友砍下了!"+  data.price+ "元");
+                confirm("恭喜您为您的朋友砍下了!" + data.price + "元");
             }
         });
     }
 
-    var money ;
+    var money;
 </script>
 </head>
 
 
-<body class="back"   style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
+<body class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
 <marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span></marquee>
 
 <h3>丹江口均州一路好家居商场</h3>
 <div>
 
     <div>
-        <p th:text="|${name} 砍掉了 : ${money} 元|"> </p>
+        </tr>
+        <p th:text="|${name} 砍掉了 : ${money} 元|"></p>
     </div>
-    <!--发起砍价前需要发送验证码验证码输入正确，才可以正常砍价-->
-
 
     <!-- 表单提交用户信息,注意字段的设置,直接是*{} -->
     <!--    <form action="#" th:action="@{/initiateBargainingBegin}" method="post">-->
@@ -160,19 +159,20 @@
     <!--        <input type="text" th:field="*{code}" />-->
     <!--        <input type="submit" value="去砍价"/>-->
     <!--    </form>-->
-</div>
-<button class="kanjiabutton" onclick="initiateBargainingBegin()"> 帮他砍价
-    <i class="flash-across"></i>
-</button>
 
+    <button class="kanjiabutton" onclick="initiateBargainingBegin()"> 帮他砍价
+        <i class="flash-across"></i>
+    </button>
+</div>
 </body>
 
 <style>
 
-    html,body{
-        width:100%;
-        height:100%;
+    html, body {
+        width: 100%;
+        height: 100%;
     }
+
     body {
         background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
         background-repeat: no-repeat;
@@ -182,34 +182,35 @@
         -webkit-background-attachment: fixed;
     }
 
-    .kanjiabutton{
-        　　background-img:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
+    .kanjiabutton {
+        　　background-img: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
 
-        background-size:cover;
+        background-size: cover;
 
-        background-size:contain;
+        background-size: contain;
 
-        background-size:100%;
+        background-size: 100%;
     }
 
     @keyframes changeImg {
         from {
-            left:-100%;
+            left: -100%;
         }
         100% {
-            left:150%;
+            left: 150%;
         }
     }
+
     .flash-across {
-        position:absolute;
-        animation:changeImg 3s ease 0s;
-        top:0;
-        width:40%;
-        height:100%;
-        content:"";
-        background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,.4) 50%,rgba(255,255,255,0) 100%);
-        transform:skewX(-45deg);
-        animation-iteration-count:infinite;
+        position: absolute;
+        animation: changeImg 3s ease 0s;
+        top: 0;
+        width: 40%;
+        height: 100%;
+        content: "";
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 100%);
+        transform: skewX(-45deg);
+        animation-iteration-count: infinite;
     }
 
 
@@ -224,10 +225,11 @@
         font-family: Microsoft YaHei;
         color: #3c5fff;
         font-size: 17px;
-        position:relative;
-        top:440px;
-        left:500px;
+        position: relative;
+        top: 440px;
+        left: 500px;
     }
+
     .kanjiabutton:hover {
         background: #fff3ec;
     }
