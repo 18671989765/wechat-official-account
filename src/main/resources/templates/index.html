@@ -2,158 +2,235 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <title>帮我砍一刀</title>
 <meta charste="utf-8">
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
-    var current_url = window.location.href;
-    var ua = window.navigator.userAgent.toLowerCase();
-    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-        getSign();
-    }
-    // getSign();
-    //分享
-    function getSign() {
-        //分享获取签名时间戳appid
-        $.ajax({
-            type: 'GET',
-            url: "http://n7p83q.natappfree.cc/sign",
-            async: false,
-            dataType: 'json',
-            data: {url: current_url},
-            success: function (data, textStatus) {
-                //console.log("data>>>",data);
-                //alert("data.signature>>>",data.signature);
-                console.log("data.appid>>>", data.appid);
-                console.log("data.timestamp>>>", data.timestamp);
-                console.log("data.noncestr>>>", data.noncestr);
-                console.log("data.signature>>>", data.signature);
-                if (textStatus == "success") {//success
-                    wx.config({
-                        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                        appId: data.appid, // 必填，公众号的唯一标识
-                        timestamp: data.timestamp, // 必填，生成签名的时间戳
-                        nonceStr: data.noncestr, // 必填，生成签名的随机串
-                        signature: data.signature,// 必填，签名，见附录1
-                        jsApiList: [
-                            'onMenuShareTimeline',
-                            'onMenuShareAppMessage',
-                            'onMenuShareQQ',
-                            'onMenuShareWeibo',
-                            'onMenuShareQZone'
-                        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-                    });
-                    wx.ready(function () {
-                        console.log("+++++++++++++++++++++========>>");
-                        share();
-                        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发>时才调用的接口，则可以直接调用，不需要放在ready函数中。
-                    });
-                }
-            }
-        })
-    }
-
-    var title = "测试Title";
-    var content = "测试Content";
-    var shareImage = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg';
-
-    function share() {
-        //分享到朋友圈
-        wx.onMenuShareTimeline({
-            title: title, // 分享标题
-            desc: content, // 分享描述
-            link: current_url, // 分享链接
-            imgUrl: shareImage, // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-        //分享给朋友
-        wx.onMenuShareAppMessage({
-            title: title, // 分享标题
-            desc: content, // 分享描述
-            link: current_url, // 分享链接
-            imgUrl: shareImage, // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                console.log("分享成功========>>");
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                console.log("分享成功========>>");
-
-            }
-        });
-        //分享到qq
-        wx.onMenuShareQQ({
-            title: title, // 分享标题
-            desc: content, // 分享描述
-            link: current_url, // 分享链接
-            imgUrl: shareImage, // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-        //分享到qq空间
-        wx.onMenuShareQZone({
-            title: title, // 分享标题
-            desc: content, // 分享描述
-            link: current_url, // 分享链接
-            imgUrl: shareImage, // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-
-    }
-    wx.error(function (res) {
-        alert(res.errMsg);
-    });
+    // var current_url = window.location.href;
+    // var ua = window.navigator.userAgent.toLowerCase();
+    // if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+    //     getSign();
+    // }
+    // // getSign();
+    // //分享
+    // function getSign() {
+    //     //分享获取签名时间戳appid
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "http://n7p83q.natappfree.cc/sign",
+    //         async: false,
+    //         dataType: 'json',
+    //         data: {url: current_url},
+    //         success: function (data, textStatus) {
+    //             //console.log("data>>>",data);
+    //             //alert("data.signature>>>",data.signature);
+    //             console.log("data.appid>>>", data.appid);
+    //             console.log("data.timestamp>>>", data.timestamp);
+    //             console.log("data.noncestr>>>", data.noncestr);
+    //             console.log("data.signature>>>", data.signature);
+    //             if (textStatus == "success") {//success
+    //                 wx.config({
+    //                     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    //                     appId: data.appid, // 必填，公众号的唯一标识
+    //                     timestamp: data.timestamp, // 必填，生成签名的时间戳
+    //                     nonceStr: data.noncestr, // 必填，生成签名的随机串
+    //                     signature: data.signature,// 必填，签名，见附录1
+    //                     jsApiList: [
+    //                         'onMenuShareTimeline',
+    //                         'onMenuShareAppMessage',
+    //                         'onMenuShareQQ',
+    //                         'onMenuShareWeibo',
+    //                         'onMenuShareQZone'
+    //                     ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    //                 });
+    //                 wx.ready(function () {
+    //                     console.log("+++++++++++++++++++++========>>");
+    //                     share();
+    //                     // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发>时才调用的接口，则可以直接调用，不需要放在ready函数中。
+    //                 });
+    //             }
+    //         }
+    //     })
+    // }
+    //
+    // var title = "测试Title";
+    // var content = "测试Content";
+    // var shareImage = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599969111530&di=08aaff72cd41a11061ebba0b3d896a60&imgtype=0&src=http%3A%2F%2Fpic44.nipic.com%2F20140729%2F11902156_102920125000_2.jpg';
+    //
+    // function share() {
+    //     //分享到朋友圈
+    //     wx.onMenuShareTimeline({
+    //         title: title, // 分享标题
+    //         desc: content, // 分享描述
+    //         link: current_url, // 分享链接
+    //         imgUrl: shareImage, // 分享图标
+    //         success: function () {
+    //             // 用户确认分享后执行的回调函数
+    //         },
+    //         cancel: function () {
+    //             // 用户取消分享后执行的回调函数
+    //         }
+    //     });
+    //     //分享给朋友
+    //     wx.onMenuShareAppMessage({
+    //         title: title, // 分享标题
+    //         desc: content, // 分享描述
+    //         link: current_url, // 分享链接
+    //         imgUrl: shareImage, // 分享图标
+    //         type: '', // 分享类型,music、video或link，不填默认为link
+    //         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    //         success: function () {
+    //             // 用户确认分享后执行的回调函数
+    //             console.log("分享成功========>>");
+    //         },
+    //         cancel: function () {
+    //             // 用户取消分享后执行的回调函数
+    //             console.log("分享成功========>>");
+    //
+    //         }
+    //     });
+    //     //分享到qq
+    //     wx.onMenuShareQQ({
+    //         title: title, // 分享标题
+    //         desc: content, // 分享描述
+    //         link: current_url, // 分享链接
+    //         imgUrl: shareImage, // 分享图标
+    //         success: function () {
+    //             // 用户确认分享后执行的回调函数
+    //         },
+    //         cancel: function () {
+    //             // 用户取消分享后执行的回调函数
+    //         }
+    //     });
+    //     //分享到qq空间
+    //     wx.onMenuShareQZone({
+    //         title: title, // 分享标题
+    //         desc: content, // 分享描述
+    //         link: current_url, // 分享链接
+    //         imgUrl: shareImage, // 分享图标
+    //         success: function () {
+    //             // 用户确认分享后执行的回调函数
+    //         },
+    //         cancel: function () {
+    //             // 用户取消分享后执行的回调函数
+    //         }
+    //     });
+    //
+    // }
+    // wx.error(function (res) {
+    //     alert(res.errMsg);
+    // });
     
     function initiateBargainingBegin() {
         $.ajax({
             type: 'POST',
-            url: "http://6g23q4.natappfree.cc/initiateBargainingBegin",
+            url: "http://v3jmpw.natappfree.cc/initiateBargainingBegin",
             async: false,
             dataType: 'json',
-            data: {"openId":openId,"code":code},
-            success: function (data, textStatus) {
-
+            data: {"openId":"123123123","authCode":"123123"},
+            success: function (data) {
+                // debugger;
+                console.log(data.price)
+                money = data.price;
+                window.location.reload()  //刷新页面
+                confirm("恭喜您为您的朋友砍下了!"+  data.price+ "元");
             }
-        })
+        });
     }
+
+    var money ;
 </script>
 </head>
 
-<body>
+
+<body class="back"   style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
+<marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span></marquee>
 
 <h3>丹江口均州一路好家居商场</h3>
 <div>
-    <button>帮我砍一刀</button>
+
     <div>
-        <h4>感谢：</h4>
         <p th:text="|${name} 砍掉了 : ${money} 元|"> </p>
     </div>
-<!--发起砍价前需要发送验证码验证码输入正确，才可以正常砍价-->
+    <!--发起砍价前需要发送验证码验证码输入正确，才可以正常砍价-->
 
-    <h1>表单提交</h1>
+
     <!-- 表单提交用户信息,注意字段的设置,直接是*{} -->
-<!--    <form action="#" th:action="@{/initiateBargainingBegin}" method="post">-->
-<!--        <input type="text" th:field="*{openId}" />-->
-<!--        <input type="text" th:field="*{code}" />-->
-<!--        <input type="submit" value="去砍价"/>-->
-<!--    </form>-->
+    <!--    <form action="#" th:action="@{/initiateBargainingBegin}" method="post">-->
+    <!--        <input type="text" th:field="*{openId}" />-->
+    <!--        <input type="text" th:field="*{code}" />-->
+    <!--        <input type="submit" value="去砍价"/>-->
+    <!--    </form>-->
 </div>
+<button class="kanjiabutton" onclick="initiateBargainingBegin()"> 帮他砍价
+    <i class="flash-across"></i>
+</button>
 
 </body>
+
+<style>
+
+    html,body{
+        width:100%;
+        height:100%;
+    }
+    body {
+        background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -webkit-background-size: 100% 100%;
+        background-attachment: fixed;
+        -webkit-background-attachment: fixed;
+    }
+
+    .kanjiabutton{
+        　　background-img:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
+
+        background-size:cover;
+
+        background-size:contain;
+
+        background-size:100%;
+    }
+
+    @keyframes changeImg {
+        from {
+            left:-100%;
+        }
+        100% {
+            left:150%;
+        }
+    }
+    .flash-across {
+        position:absolute;
+        animation:changeImg 3s ease 0s;
+        top:0;
+        width:40%;
+        height:100%;
+        content:"";
+        background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,.4) 50%,rgba(255,255,255,0) 100%);
+        transform:skewX(-45deg);
+        animation-iteration-count:infinite;
+    }
+
+
+    .kanjiabutton {
+        width: 200px;
+        height: 40px;
+        border-width: 0px;
+        border-radius: 3px;
+        background: red;
+        cursor: pointer;
+        outline: none;
+        font-family: Microsoft YaHei;
+        color: #3c5fff;
+        font-size: 17px;
+        position:relative;
+        top:440px;
+        left:500px;
+    }
+    .kanjiabutton:hover {
+        background: #fff3ec;
+    }
+
+</style>
 </html>

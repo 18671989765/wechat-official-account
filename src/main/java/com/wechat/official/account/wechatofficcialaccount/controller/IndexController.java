@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.official.account.wechatofficcialaccount.config.AccessTokenInfo;
 import com.wechat.official.account.wechatofficcialaccount.config.WaChatAppIdInfos;
-import com.wechat.official.account.wechatofficcialaccount.dto.initiateBargainingDto;
 import com.wechat.official.account.wechatofficcialaccount.util.JS_Sign;
 import com.wechat.official.account.wechatofficcialaccount.wx.util.HttpClientUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -36,11 +35,11 @@ public class IndexController {
         //进来时，判断该用户是否有发起过砍价，如果发起过砍价，则将砍价列表返回
         //用户进入砍价页面，携带了openId 即开始砍价，使用openId记录发起砍价数据
         //发起砍价表，砍价表 如果两个表中都没有数据，则视为发起砍价，数据会存储在两个表
-
+        //如果是帮忙砍价
 
 
         map.addAttribute("name","中华石杉");
-        map.addAttribute("money",20);
+
         return "index";
     }
 
@@ -117,18 +116,6 @@ public class IndexController {
     }
 
 
-    /**
-     * 发起砍价
-     * @param  initiateBargainingDto
-     * @return
-     */
-    @PostMapping("/initiateBargainingBegin")
-    public String initiateBargainingBegin(@ModelAttribute("initiateBargainingDto") @RequestBody initiateBargainingDto initiateBargainingDto){
-        log.info("发起了一个砍价请求：",initiateBargainingDto);
-        //校验验证码是否正确
-
-        return null;
-    }
 
     @GetMapping(value = "/getUser", produces = "application/json; charset=utf-8")
     public String getUser(@RequestParam(name = "code",required = true) String code) {

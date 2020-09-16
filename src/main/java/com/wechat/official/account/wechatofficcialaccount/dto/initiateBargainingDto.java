@@ -20,4 +20,6 @@ public class initiateBargainingDto {
     //发起砍价的验证码
     private String authCode;
 
+    private double price;
+
 }
