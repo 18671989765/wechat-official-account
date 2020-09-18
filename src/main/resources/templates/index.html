@@ -123,34 +123,38 @@
     function initiateBargainingBegin() {
         $.ajax({
             type: 'POST',
-            url: "http://v3jmpw.natappfree.cc/initiateBargainingBegin",
+            url: "http://d7higg.natappfree.cc/initiateBargainingBegin",
             async: false,
             dataType: 'json',
             data: {"openId": "123123123", "authCode": "123123"},
             success: function (data) {
                 // debugger;
-                console.log(data.price)
-                money = data.price;
-                window.location.reload()  //刷新页面
+                // console.log(data.price
+                debugger;
+                 $("#price").html("您砍掉了："+data.price +"元");
+                // window.location.reload()  //刷新页面
                 confirm("恭喜您为您的朋友砍下了!" + data.price + "元");
             }
         });
     }
 
-    var money;
+
 </script>
 </head>
 
 
 <body class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
-<marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span></marquee>
+   <!-- 动态展示效果  -->
+   <marquee>
+     <span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span>
+   </marquee>
 
-<h3>丹江口均州一路好家居商场</h3>
+
 <div>
 
     <div>
         </tr>
-        <p th:text="|${name} 砍掉了 : ${money} 元|"></p>
+        <p5   id = "price"></p5>
     </div>
 
     <!-- 表单提交用户信息,注意字段的设置,直接是*{} -->
