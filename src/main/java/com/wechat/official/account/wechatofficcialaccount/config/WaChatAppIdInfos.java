@@ -1,5 +1,6 @@
 package com.wechat.official.account.wechatofficcialaccount.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,58 +8,50 @@ import org.springframework.context.annotation.Configuration;
  * @author Administrator
  * @version 1.0
  * @date 2020/9/13 5:17
+ *
+ * 使用静态方式进行熟悉注入
  */
 @Configuration
 @ConfigurationProperties(prefix = "wx")
 public class WaChatAppIdInfos {
 
-    private String appId;
+    public static  String appId;
 
-    private String appSecret;
+    public static  String appSecret;
 
-    private String token;
+    public static  String token;
 
-    private String aesKey;
+    public static  String aesKey;
 
-    private String mchId;
+    public static  String mchId;
 
-    public String getAppId() {
-        return appId;
+    public static String serversUrl;
+
+
+    @Value("${wx.appId}")
+    public static void setAppId(String appId) {
+        WaChatAppIdInfos.appId = appId;
+    }
+    @Value("${wx.appSecret}")
+    public static void setAppSecret(String appSecret) {
+        WaChatAppIdInfos.appSecret = appSecret;
+    }
+    @Value("${wx.token}")
+    public static void setToken(String token) {
+        WaChatAppIdInfos.token = token;
+    }
+    @Value("${wx.aesKey}")
+    public static void setAesKey(String aesKey) {
+        WaChatAppIdInfos.aesKey = aesKey;
+    }
+    @Value("${wx.mchId}")
+    public static void setMchId(String mchId) {
+        WaChatAppIdInfos.mchId = mchId;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
+    @Value("${wx.serversUrl}")
+    public static void setServersUrl(String serversUrl) {
+        WaChatAppIdInfos.serversUrl = serversUrl;
     }
 
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getAesKey() {
-        return aesKey;
-    }
-
-    public void setAesKey(String aesKey) {
-        this.aesKey = aesKey;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
 }

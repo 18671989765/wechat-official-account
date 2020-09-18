@@ -104,13 +104,13 @@ public class IndexController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         HttpSession session = request.getSession();
         String url = request.getParameter("url");
-        String accesstoken = (String) session.getAttribute(waChatAppIdInfos.getAppId()+"accesstoken_session");
+        String accesstoken = (String) session.getAttribute(WaChatAppIdInfos.appId+"accesstoken_session");
         if(accesstoken == null || "".equals(accesstoken)){
             accesstoken = AccessTokenInfo.accessToken.getAccessToken();
-            session.setAttribute(waChatAppIdInfos.getAppId()+"accesstoken_session",accessToken);
+            session.setAttribute(WaChatAppIdInfos.appId+"accesstoken_session",accessToken);
 //            session.setMaxInactiveInterval(7200);
         }
-        Map<String, String> js_data = JS_Sign.getJSSignMapResult( waChatAppIdInfos.getAppId(), waChatAppIdInfos.getAppSecret(), waChatAppIdInfos.getAesKey(),accesstoken,url, request);
+        Map<String, String> js_data = JS_Sign.getJSSignMapResult( WaChatAppIdInfos.appId, WaChatAppIdInfos.appSecret, WaChatAppIdInfos.aesKey,accesstoken,url, request);
         System.out.println("请求接口返回js_data:"+js_data.toString());
         return js_data;
     }
@@ -147,8 +147,8 @@ public class IndexController {
         WaChatAppIdInfos waChatAppIdInfos = new WaChatAppIdInfos();
         //TODO 1、通过code获取access_token
         Map<String, Object> params = new HashMap<>();
-        params.put("appid",waChatAppIdInfos.getAppId());
-        params.put("secret",waChatAppIdInfos.getAppSecret());
+        params.put("appid",WaChatAppIdInfos.appId);
+        params.put("secret",WaChatAppIdInfos.appSecret);
         params.put("code",code);
         params.put("grant_type","authorization_code");
         JSONObject jsonObject = JSONObject.parseObject(HttpClientUtil.doHttpsGet(GET_ACCESS_TOKEN_URL,params));

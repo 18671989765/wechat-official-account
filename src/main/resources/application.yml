@@ -28,4 +28,5 @@ wx:
   token: antgan
   aesKey: #5wUYxa1veC45VwT7KmcTOSkMRaXRVS1ngcKiikeYgmM # =如果选择安全模式，需要填入。如果是明文模式，填空就好了
   mchId: #商户ID
+  serversUrl: http://d7higg.natappfree.cc
 

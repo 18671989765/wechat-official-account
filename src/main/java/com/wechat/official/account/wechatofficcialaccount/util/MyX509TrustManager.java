@@ -1,5 +1,6 @@
 package com.wechat.official.account.wechatofficcialaccount.util;
 
+import javax.net.ssl.TrustManager;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -9,7 +10,7 @@ import java.security.cert.X509Certificate;
  * @version 1.0
  * @date 2020/9/13 5:37
  */
-public class MyX509TrustManager {
+public class MyX509TrustManager implements TrustManager {
 
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
     }

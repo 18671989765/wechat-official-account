@@ -27,6 +27,7 @@ import java.util.*;
  */
 public class JS_Sign {
 
+
     public static Map<String, String> getJSSignMapResult(String appid,String appSecret,String apiKey,String access_token,String url,HttpServletRequest request){
         Map<String, String> ret = new HashMap<String, String>();
         String jsapi_ticket=(String)request.getSession().getAttribute(appid+"jsapi_ticket_session");
@@ -75,7 +76,7 @@ public class JS_Sign {
         ret.put("noncestr", nonce_str);
         ret.put("timestamp", timestamp);
         ret.put("signature", signature);
-        ret.put("appid", new WaChatAppIdInfos().getAppId());
+        ret.put("appid", WaChatAppIdInfos.appId);
         return ret;
     }
 
@@ -127,7 +128,7 @@ public class JS_Sign {
     public static String httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         try {
             // 创建SSLContext对象，并使用我们指定的信任管理器初始化
-            TrustManager[] tm = {(TrustManager) new MyX509TrustManager()};
+            TrustManager[] tm = {  new MyX509TrustManager()};
             SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
             sslContext.init(null, tm, new java.security.SecureRandom());
             // 从上述SSLContext对象中得到SSLSocketFactory对象
