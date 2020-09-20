@@ -34,33 +34,38 @@ public class KanJiaController {
 
     @Autowired
     private InitiatebargainingServiceImpl initiatebargainingService;
+
     /**
      * 发起砍价
-     * @param  initiateBargainingDto
+     *
+     * @param initiateBargainingDto
      * @return
      */
     @PostMapping("/initiateBargainingBegin")
-    public InitiateBargainingDto initiateBargainingBegin(@ModelAttribute("initiateBargainingDto") @RequestBody InitiateBargainingDto initiateBargainingDto){
-        log.info("发起了一个砍价请求：",initiateBargainingDto);
-        UserInfo userInfoExists = userInfoService.queryWeChatUserInfoByOpenId(initiateBargainingDto.getBangKanOpenId());
-        if(null != userInfoExists){
+    public InitiateBargainingDto initiateBargainingBegin(@ModelAttribute("initiateBargainingDto") @RequestBody InitiateBargainingDto initiateBargainingDto) {
+        log.info("发起了一个砍价请求：", initiateBargainingDto);
+        InitiateBargainingDto initiateBargainingDto1 = initiatebargainingService.queryInitiateBargainingByOpenId(initiateBargainingDto.getFaQiRenOpenId(), initiateBargainingDto.getBangKanOpenId());
+        if (null != initiateBargainingDto1) {
             log.info("已经砍过价，不能再次砍价，可以发送给朋友帮忙砍价");
-        }else{
+            initiateBargainingDto1.setRemark("您已经砍过价，可以分享给朋友再次砍价哟");
+            return initiateBargainingDto1;
+        } else {
             int count = 10;
             //砍价金额 从数据库中查
             BigDecimal price = BigDecimal.valueOf(10L);
-            BigDecimal finalPrice =BigDecimal.ZERO;
+            BigDecimal finalPrice = BigDecimal.ZERO;
             List<BigDecimal> list = BargainCommonUtils.getTempBargainList(count, price, finalPrice);
             double kanDiaoPrice = list.get(0).doubleValue();
             initiateBargainingDto.setPrice(kanDiaoPrice);
             initiateBargainingDto.setCreateTime(SimpleFormatterUtil.simpleFormatter());
+            initiateBargainingDto.setNum(1);
             initiatebargainingService.addInitiatebargainingInfo(initiateBargainingDto);
             log.info("砍价成功！");
-            log.info("砍价成功！,{}",initiateBargainingDto);
-
+            log.info("砍价成功！,{}", initiateBargainingDto);
+            return initiateBargainingDto;
         }
 
-        return initiateBargainingDto;
+
     }
 
 }

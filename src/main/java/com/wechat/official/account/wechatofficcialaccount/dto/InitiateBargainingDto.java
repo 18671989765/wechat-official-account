@@ -26,4 +26,8 @@ public class InitiateBargainingDto {
     //砍价时间
     private String createTime;
 
+    //砍价次数
+    private int num;
+    //后台给出的提示信息 备注
+    private String remark;
 }

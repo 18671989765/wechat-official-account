@@ -14,5 +14,5 @@ public interface InitiatebargainingMapper {
 
     void addInitiatebargainingInfo(@Param("initDto") InitiateBargainingDto initiateBrgainingDto);
 
-    InitiateBargainingDto queryInitiateBargainingByOpenId(@Param("openId") String openId);
+    InitiateBargainingDto queryInitiateBargainingByOpenId(@Param("faqirenOpenId")String faqirenOpenId,@Param("bangkanOpenId") String openId);
 }

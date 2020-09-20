@@ -4,6 +4,7 @@ import com.wechat.official.account.wechatofficcialaccount.dto.InitiateBargaining
 
 import com.wechat.official.account.wechatofficcialaccount.mapper.InitiatebargainingMapper;
 import com.wechat.official.account.wechatofficcialaccount.service.initiatebargainingService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,9 @@ public class InitiatebargainingServiceImpl implements initiatebargainingService 
     @Override
     public void addInitiatebargainingInfo(InitiateBargainingDto initiateBrgainingDto) {
         initiatebargainingMapper.addInitiatebargainingInfo(initiateBrgainingDto);
+    }
+
+    public InitiateBargainingDto queryInitiateBargainingByOpenId(String faqirenOpenId,String openId) {
+        return initiatebargainingMapper.queryInitiateBargainingByOpenId(faqirenOpenId,openId);
     }
 }

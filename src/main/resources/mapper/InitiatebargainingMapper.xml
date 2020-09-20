@@ -4,12 +4,12 @@
 
 
     <insert id="addInitiatebargainingInfo" parameterType="com.wechat.official.account.wechatofficcialaccount.dto.InitiateBargainingDto">
-        insert into t_initiatebargaining(faQiRenOpenId,bangKanOpenId,count,price,createTime)
-                    values (#{initDto.faQiRenOpenId},#{initDto.bangKanOpenId},#{initDto.count},#{initDto.price},#{initDto.createTime});
+        insert into t_initiatebargaining(faQiRenOpenId,bangKanOpenId,`num`,price,createTime)
+                    values (#{initDto.faQiRenOpenId},#{initDto.bangKanOpenId},#{initDto.num},#{initDto.price},#{initDto.createTime});
     </insert>
 
     <select id="queryInitiateBargainingByOpenId" parameterType="java.lang.String" resultType="com.wechat.official.account.wechatofficcialaccount.dto.InitiateBargainingDto">
-        select * from t_initiatebargaining where openid = #{openId}
+        select * from t_initiatebargaining where faQiRenOpenId = #{faqirenOpenId} and bangKanOpenId = #{bangkanOpenId}
     </select>
 
 

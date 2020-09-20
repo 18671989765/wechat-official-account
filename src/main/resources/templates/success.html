@@ -10,8 +10,6 @@
     var bangKanOpenId =[[${bangKanOpenId}]];
 
     function initiateBargainingBegin() {
-        alert(faQiRenOpenId);
-        alert(bangKanOpenId);
         $.ajax({
             type: 'POST',
             url: " http://ti9nzs.natappfree.cc/initiateBargainingBegin",
@@ -19,11 +17,12 @@
             dataType: 'json',
             data: {"faQiRenOpenId": faQiRenOpenId, "bangKanOpenId": bangKanOpenId},
             success: function (data) {
-                // debugger;
-
-                console.log(data.price)
+                if(null != data.remark ){
+                    alert(data.remark)
+                    $("#kanJia").html("您为您的朋友砍下了!"+data.price + "元");
+                    return;
+                }
                 $("#kanJia").html("恭喜您为您的朋友砍下了!"+data.price + "元");
-                // window.location.reload()  //刷新页面
 
             }
         });
@@ -34,11 +33,10 @@
 
 
 <body class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
-<marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价 success</span></marquee>
+<marquee><span style="font-weight: bolder;font-size: 40px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span></marquee>
 
 <h3>丹江口均州一路好家居商场</h3>
-<h6 id="faQiRenOpenId" th:value="${faQiRenOpenId}"></h6>
-<h6 id="bangKanOpenId" th:value="${bangKanOpenId}"></h6>
+
 
 <div>
     <div>
