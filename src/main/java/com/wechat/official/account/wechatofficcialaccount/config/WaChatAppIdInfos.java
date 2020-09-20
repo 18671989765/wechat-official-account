@@ -1,64 +1,54 @@
 package com.wechat.official.account.wechatofficcialaccount.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Administrator
  * @version 1.0
  * @date 2020/9/13 5:17
  */
-@Configuration
+
+@Component
 @ConfigurationProperties(prefix = "wx")
 public class WaChatAppIdInfos {
 
-    private String appId;
+    public static  String appId;
 
-    private String appSecret;
+    public static String appSecret;
 
-    private String token;
+    public static String token;
 
-    private String aesKey;
+    public static String aesKey;
 
-    private String mchId;
+    public static String mchId;
 
-    public String getAppId() {
-        return appId;
-    }
+    public static String serviceUrl;
 
+    @Value("${wx.appId}")
     public void setAppId(String appId) {
         this.appId = appId;
     }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
+    @Value("${wx.appSecret}")
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
     }
-
-    public String getToken() {
-        return token;
-    }
-
+    @Value("${wx.token}")
     public void setToken(String token) {
         this.token = token;
     }
-
-    public String getAesKey() {
-        return aesKey;
-    }
-
+    @Value("${wx.aesKey}")
     public void setAesKey(String aesKey) {
         this.aesKey = aesKey;
     }
-
-    public String getMchId() {
-        return mchId;
-    }
-
+    @Value("${wx.mchId}")
     public void setMchId(String mchId) {
         this.mchId = mchId;
+    }
+    @Value("${wx.serviceUrl}")
+    public void setServiceUrl(String serviceUrl) {
+        this.serviceUrl = serviceUrl;
     }
 }

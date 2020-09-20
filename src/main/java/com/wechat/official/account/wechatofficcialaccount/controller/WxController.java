@@ -143,49 +143,4 @@ public class WxController  {
         return "";
     }
 
-
-
-
-//    private IService iService = new WxService();
-//
-//
-//    @GetMapping
-//    public String check(String signature, String timestamp, String nonce, String echostr) {
-//        if (iService.checkSignature(signature, timestamp, nonce, echostr)) {
-//            return echostr;
-//        }
-//        return echostr;
-//    }
-//
-//    public static void main(String[] args) throws NoSuchAlgorithmException {
-//
-//    }
-
-
-//    /**
-//     * 接收到用户发送的消息
-//     * @param request
-//     * @param response
-//     * @throws IOException
-//     */
-//    @PostMapping
-//    public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        request.setCharacterEncoding("UTF-8");
-//        response.setCharacterEncoding("UTF-8");
-//         PrintWriter out = response.getWriter();
-//        try {
-//            // 微信服务器推送过来的是XML格式。
-//            WxXmlMessage wx = XStreamTransformer.fromXml(WxXmlMessage.class, request.getInputStream());
-//            System.out.println("消息：\n " + wx.toString());
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            out.close();
-//        }
-//    }
-
-
-
-
 }

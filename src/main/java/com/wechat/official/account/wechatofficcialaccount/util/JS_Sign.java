@@ -27,22 +27,22 @@ import java.util.*;
  */
 public class JS_Sign {
 
-    public static Map<String, String> getJSSignMapResult(String appid,String appSecret,String apiKey,String access_token,String url,HttpServletRequest request){
+    public static Map<String, String> getJSSignMapResult(String appid, String appSecret, String apiKey, String access_token, String url, HttpServletRequest request) {
         Map<String, String> ret = new HashMap<String, String>();
-        String jsapi_ticket=(String)request.getSession().getAttribute(appid+"jsapi_ticket_session");
-        if(jsapi_ticket==null || "".equals(jsapi_ticket)){
+        String jsapi_ticket = (String) request.getSession().getAttribute(appid + "jsapi_ticket_session");
+        if (jsapi_ticket == null || "".equals(jsapi_ticket)) {
 
-            JSONObject json=MyWeixinUtil.httpRequest("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+access_token+"&type=jsapi", "GET", "");
+            JSONObject json = MyWeixinUtil.httpRequest("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi", "GET", "");
 
-            jsapi_ticket=(String)json.get("ticket");
-            request.getSession().setAttribute(appid+"jsapi_ticket_session", jsapi_ticket);
+            jsapi_ticket = (String) json.get("ticket");
+            request.getSession().setAttribute(appid + "jsapi_ticket_session", jsapi_ticket);
             request.getSession().setMaxInactiveInterval(7200);
         }
-        ret = sign(jsapi_ticket, url);
+        ret = sign(jsapi_ticket, url, appid);
         return ret;
     }
 
-    public static Map<String, String> sign(String jsapi_ticket, String url) {
+    public static Map<String, String> sign(String jsapi_ticket, String url, String appid) {
         Map<String, String> ret = new HashMap<String, String>();
         String nonce_str = create_nonce_str();
         String timestamp = create_timestamp();
@@ -51,37 +51,32 @@ public class JS_Sign {
 
         //注意这里参数名必须全部小写，且必须有序
         string1 = "jsapi_ticket=" + jsapi_ticket +
-                "&noncestr=" + nonce_str +
+                "&nonceStr=" + nonce_str +
                 "&timestamp=" + timestamp +
                 "&url=" + url;
         //  System.out.println(string1);
-        try
-        {
+        try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
             crypt.update(string1.getBytes("UTF-8"));
             signature = byteToHex(crypt.digest());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         ret.put("url", url);
         ret.put("jsapi_ticket", jsapi_ticket);
-        ret.put("noncestr", nonce_str);
+        ret.put("nonceStr", nonce_str);
         ret.put("timestamp", timestamp);
         ret.put("signature", signature);
-        ret.put("appid", new WaChatAppIdInfos().getAppId());
+        ret.put("appId", appid);
         return ret;
     }
 
     public static String byteToHex(final byte[] hash) {
         Formatter formatter = new Formatter();
-        for (byte b : hash){
+        for (byte b : hash) {
             formatter.format("%02x", b);
         }
         String result = formatter.toString();
@@ -98,19 +93,19 @@ public class JS_Sign {
     }
 
     @SuppressWarnings("rawtypes")
-    public static String getRequestXml(SortedMap<Object,Object> parameters){
+    public static String getRequestXml(SortedMap<Object, Object> parameters) {
         StringBuffer sb = new StringBuffer();
         sb.append("<xml>");
         Set es = parameters.entrySet();
         Iterator it = es.iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            String k = (String)entry.getKey();
-            String v = (String)entry.getValue();
-            if ("attach".equalsIgnoreCase(k)||"body".equalsIgnoreCase(k)||"sign".equalsIgnoreCase(k)) {
-                sb.append("<"+k+">"+"<![CDATA["+v+"]]></"+k+">");
-            }else {
-                sb.append("<"+k+">"+v+"</"+k+">");
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String k = (String) entry.getKey();
+            String v = (String) entry.getValue();
+            if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k) || "sign".equalsIgnoreCase(k)) {
+                sb.append("<" + k + ">" + "<![CDATA[" + v + "]]></" + k + ">");
+            } else {
+                sb.append("<" + k + ">" + v + "</" + k + ">");
             }
         }
         sb.append("</xml>");
@@ -119,9 +114,10 @@ public class JS_Sign {
 
     /**
      * 发送https请求
-     * @param requestUrl 请求地址
+     *
+     * @param requestUrl    请求地址
      * @param requestMethod 请求方式（GET、POST）
-     * @param outputStr 提交的数据
+     * @param outputStr     提交的数据
      * @return 返回微信服务器响应的信息
      */
     public static String httpsRequest(String requestUrl, String requestMethod, String outputStr) {
@@ -176,7 +172,7 @@ public class JS_Sign {
 
     public static String getIp2(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
-        if (!(ip==null||ip.trim().length()==0) && !"unKnown".equalsIgnoreCase(ip)) {
+        if (!(ip == null || ip.trim().length() == 0) && !"unKnown".equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个ip值，第一个ip才是真实ip
             int index = ip.indexOf(",");
             if (index != -1) {
@@ -186,22 +182,22 @@ public class JS_Sign {
             }
         }
         ip = request.getHeader("X-Real-IP");
-        if (!(ip==null||ip.trim().length()==0) && !"unKnown".equalsIgnoreCase(ip)) {
+        if (!(ip == null || ip.trim().length() == 0) && !"unKnown".equalsIgnoreCase(ip)) {
             return ip;
         }
         return request.getRemoteAddr();
     }
 
     @SuppressWarnings("rawtypes")
-    public static String createSign(String apiKey,String characterEncoding,SortedMap<Object,Object> parameters){
+    public static String createSign(String apiKey, String characterEncoding, SortedMap<Object, Object> parameters) {
         StringBuffer sb = new StringBuffer();
         Set es = parameters.entrySet();
         Iterator it = es.iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            String k = (String)entry.getKey();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String k = (String) entry.getKey();
             Object v = entry.getValue();
-            if(null != v && !"".equals(v)
+            if (null != v && !"".equals(v)
                     && !"sign".equals(k) && !"key".equals(k)) {
                 sb.append(k + "=" + v + "&");
             }
@@ -252,23 +248,23 @@ public class JS_Sign {
         return resultString;
     }
 
-    private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     /**
      * https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
-     * @param code
-     * 正确时返回的JSON数据包如下：
-    {
-    "access_token":"ACCESS_TOKEN",
-    "expires_in":7200,
-    "refresh_token":"REFRESH_TOKEN",
-    "openid":"OPENID",
-    "scope":"SCOPE"
-    }
+     *
+     * @param code 正确时返回的JSON数据包如下：
+     *             {
+     *             "access_token":"ACCESS_TOKEN",
+     *             "expires_in":7200,
+     *             "refresh_token":"REFRESH_TOKEN",
+     *             "openid":"OPENID",
+     *             "scope":"SCOPE"
+     *             }
      */
     @SuppressWarnings("unused")
-    private Map<String, String> getAccess_tokenByCode(String appid,String appSecret,String code, HttpServletResponse response) {
+    private Map<String, String> getAccess_tokenByCode(String appid, String appSecret, String code, HttpServletResponse response) {
         //System.out.println("method start getAccess_tokenByCode(String code, HttpServletResponse response)");
         Map<String, String> data = new HashMap<String, String>();
         String requestUrlMessageFormat = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
@@ -289,11 +285,11 @@ public class JS_Sign {
     /**
      * 解析xml
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static Map doXMLParse(String strxml) throws Exception {
         strxml = strxml.replaceFirst("encoding=\".*\"", "encoding=\"UTF-8\"");
 
-        if(null == strxml || "".equals(strxml)) {
+        if (null == strxml || "".equals(strxml)) {
             return null;
         }
 
@@ -305,12 +301,12 @@ public class JS_Sign {
         Element root = doc.getRootElement();
         List list = root.getChildren();
         Iterator it = list.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Element e = (Element) it.next();
             String k = e.getName();
             String v = "";
             List children = e.getChildren();
-            if(children.isEmpty()) {
+            if (children.isEmpty()) {
                 v = e.getTextNormalize();
             } else {
                 v = getChildrenText(children);
@@ -329,15 +325,15 @@ public class JS_Sign {
     @SuppressWarnings("rawtypes")
     public static String getChildrenText(List children) {
         StringBuffer sb = new StringBuffer();
-        if(!children.isEmpty()) {
+        if (!children.isEmpty()) {
             Iterator it = children.iterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 Element e = (Element) it.next();
                 String name = e.getName();
                 String value = e.getTextNormalize();
                 List list = e.getChildren();
                 sb.append("<" + name + ">");
-                if(!list.isEmpty()) {
+                if (!list.isEmpty()) {
                     sb.append(getChildrenText(list));
                 }
                 sb.append(value);

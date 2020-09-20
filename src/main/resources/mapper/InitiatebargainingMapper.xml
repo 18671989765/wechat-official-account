@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.official.account.wechatofficcialaccount.mapper.InitiatebargainingMapper">
+
+
+    <insert id="addInitiatebargainingInfo" parameterType="com.wechat.official.account.wechatofficcialaccount.dto.InitiateBargainingDto">
+        insert into t_initiatebargaining(faQiRenOpenId,bangKanOpenId,count,price,createTime)
+                    values (#{initDto.faQiRenOpenId},#{initDto.bangKanOpenId},#{initDto.count},#{initDto.price},#{initDto.createTime});
+    </insert>
+
+    <select id="queryInitiateBargainingByOpenId" parameterType="java.lang.String" resultType="com.wechat.official.account.wechatofficcialaccount.dto.InitiateBargainingDto">
+        select * from t_initiatebargaining where openid = #{openId}
+    </select>
+
+
+</mapper>

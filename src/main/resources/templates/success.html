@@ -4,34 +4,52 @@
 <meta charste="utf-8">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript">
+<script th:inline="javascript">
+
+    var faQiRenOpenId =[[${faQiRenOpenId}]];
+    var bangKanOpenId =[[${bangKanOpenId}]];
+
+    function initiateBargainingBegin() {
+        alert(faQiRenOpenId);
+        alert(bangKanOpenId);
+        $.ajax({
+            type: 'POST',
+            url: " http://ti9nzs.natappfree.cc/initiateBargainingBegin",
+            async: false,
+            dataType: 'json',
+            data: {"faQiRenOpenId": faQiRenOpenId, "bangKanOpenId": bangKanOpenId},
+            success: function (data) {
+                // debugger;
+
+                console.log(data.price)
+                $("#kanJia").html("恭喜您为您的朋友砍下了!"+data.price + "元");
+                // window.location.reload()  //刷新页面
+
+            }
+        });
+    }
 
 </script>
 </head>
 
 
 <body class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
-<marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价 index</span></marquee>
+<marquee><span style="font-weight: bolder;font-size: 30px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价 success</span></marquee>
 
 <h3>丹江口均州一路好家居商场</h3>
-<div>
+<h6 id="faQiRenOpenId" th:value="${faQiRenOpenId}"></h6>
+<h6 id="bangKanOpenId" th:value="${bangKanOpenId}"></h6>
 
+<div>
     <div>
         </tr>
         <p id="kanJia"></p>
     </div>
-
-    <!-- 表单提交用户信息,注意字段的设置,直接是*{} -->
-    <!--    <form action="#" th:action="@{/initiateBargainingBegin}" method="post">-->
-    <!--        <input type="text" th:field="*{openId}" />-->
-    <!--        <input type="text" th:field="*{code}" />-->
-    <!--        <input type="submit" value="去砍价"/>-->
-    <!--    </form>-->
-
-<!--    <button class="kanjiabutton" onclick="initiateBargainingBegin()"> 帮他砍价-->
-<!--        <i class="flash-across"></i>-->
-<!--    </button>-->
+    <button class="kanjiabutton" onclick="initiateBargainingBegin()"> 帮他砍价
+        <i class="flash-across"></i>
+    </button>
 </div>
+
 </body>
 
 <style>

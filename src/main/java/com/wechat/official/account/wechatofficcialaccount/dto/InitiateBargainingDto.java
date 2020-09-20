@@ -9,17 +9,21 @@ import lombok.Data;
  * 点击砍价需要传递的信息
  */
 @Data
-public class initiateBargainingDto {
+public class InitiateBargainingDto {
 
     //发起砍价人的openID
-    private String openId;
+    private String faQiRenOpenId;
 
     //朋友的openId
-    private String frendsOpenId;
+    private String bangKanOpenId;
 
     //发起砍价的验证码
     private String authCode;
 
+    //砍掉的金额
     private double price;
+
+    //砍价时间
+    private String createTime;
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.official.account.wechatofficcialaccount.mapper.UserInfoMapper">
+
+
+    <insert id="addWeChatUserInfo" parameterType="com.wechat.official.account.wechatofficcialaccount.entity.UserInfo">
+        insert into t_wechat_userinfo(openid,nickname,headimgurl,city,country,province,`language`,sex,createtime,numberOfVisits,privilege)
+                    values (#{userInfo.openid},#{userInfo.nickname},#{userInfo.headimgurl},#{userInfo.city},#{userInfo.country},#{userInfo.province},#{userInfo.language},#{userInfo.sex},#{userInfo.createtime},#{userInfo.numberOfVisits},#{userInfo.privilege});
+    </insert>
+
+    <select id="queryWeChatUserInfoByOpenId" parameterType="java.lang.String" resultType="com.wechat.official.account.wechatofficcialaccount.entity.UserInfo">
+        select * from t_wechat_userinfo where openid = #{openId}
+    </select>
+
+    <update id="updateWeChatNumberOfVisits" parameterType="java.lang.String">
+        update t_wechat_userinfo set numberOfVisits  = numberOfVisits+1 where openId = #{openId}
+    </update>
+</mapper>
