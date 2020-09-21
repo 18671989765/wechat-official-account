@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.wechat.official.account.wechatofficcialaccount.config.AccessTokenInfo;
 import com.wechat.official.account.wechatofficcialaccount.config.WaChatAppIdInfos;
 import com.wechat.official.account.wechatofficcialaccount.entity.AccessToken;
-import com.wechat.official.account.wechatofficcialaccount.entity.UserInfo;
-import com.wechat.official.account.wechatofficcialaccount.service.UserInfoService;
 import com.wechat.official.account.wechatofficcialaccount.service.impl.UserInfoServiceImpl;
 import com.wechat.official.account.wechatofficcialaccount.util.JS_Sign;
 import org.slf4j.Logger;
@@ -73,8 +71,16 @@ public class IndexController {
         Map<String, String> map = new HashMap<>();
         map.put("bangKanOpenId", openId);
         map.put("faQiRenOpenId", faQiRenOpenId);
-
+        map.put("serviceUrl", WaChatAppIdInfos.serviceUrl);
         return new ModelAndView("success", map);
+    }
+
+
+    @GetMapping("/message")
+    public ModelAndView success() {
+        Map map = new HashMap();
+
+        return new ModelAndView("message", map);
     }
 
 

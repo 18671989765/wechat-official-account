@@ -6,23 +6,24 @@
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script th:inline="javascript">
 
-    var faQiRenOpenId =[[${faQiRenOpenId}]];
-    var bangKanOpenId =[[${bangKanOpenId}]];
+    var faQiRenOpenId = [[${faQiRenOpenId}]];
+    var bangKanOpenId = [[${bangKanOpenId}]];
+    var serviceUrl = [[${serviceUrl}]];
 
     function initiateBargainingBegin() {
         $.ajax({
             type: 'POST',
-            url: " http://ti9nzs.natappfree.cc/initiateBargainingBegin",
+            url: serviceUrl + "/initiateBargainingBegin",
             async: false,
             dataType: 'json',
             data: {"faQiRenOpenId": faQiRenOpenId, "bangKanOpenId": bangKanOpenId},
             success: function (data) {
-                if(null != data.remark ){
+                if (null != data.remark) {
                     alert(data.remark)
-                    $("#kanJia").html("您为您的朋友砍下了!"+data.price + "元");
+                    $("#kanJia").html("您为您的朋友砍下了!" + data.price + "元");
                     return;
                 }
-                $("#kanJia").html("恭喜您为您的朋友砍下了!"+data.price + "元");
+                $("#kanJia").html("恭喜您为您的朋友砍下了!" + data.price + "元");
 
             }
         });

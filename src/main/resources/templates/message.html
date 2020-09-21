@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<title>好家居品牌广场，又有好消息了...</title>
+<meta charste="utf-8">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/js/emojify.min.js"></script>
+<link href="http://cdn.staticfile.org/emoji/0.2.2/emoji.css" rel="stylesheet" type="text/css"/>
+<script src="http://cdn.staticfile.org/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/emoji/0.2.2/emoji.js"></script>
+<script th:inline="javascript">
+
+    // 初始化
+    var emoji = new EmojiConvertor();
+
+    // 设置指向 emoji 图片的地址 (requires trailing slash)
+    // you can grab the images from the emoji-data link here:
+    // https://github.com/iamcal/js-emoji/tree/master/build
+    emoji.img_sets.apple.path = '/plugins/js-emoji/emoji-data/img-apple-64/';
+
+    /**
+     * If the platform supports native emoticons, use those instead
+     * of the fallbacks.
+     * 如果平台支持原生表情解析，使用原生表情而不是回退的图片形式
+     * 默认：emoji.allow_native = true;
+     */
+// false 设置默认都使用图片形式，如果 true 的话，在 ios 系统下会默认使用原生的表情
+// 在页面置于 app 客户端 webview 中时，部分 ios 机型无法正确识别原生表情
+    emoji.allow_native = false;
+
+    /**
+     * [emojiTransfer 转换评论中的表情]
+     * @author Alexee
+     * @date   2017-07-17
+     * @param  {[string]}   data     [html字符串数据]
+     * @return {[string]}   newData  [处理过的html字符串数据]
+     */
+    function emojiTransfer(data) {
+        // 筛选出 emoji unicode 的正则，具体看你们的后端人员如何存储的 emoji 数据
+        // ...[emoji:d83dde02]... => s:[emoji:d83dde02] match:d83dde02
+        var newData = data.replace(/\[emoji:([^\s\[]+?)\]/g, function (s, match) {
+
+            // d83dde02 => us:d83d umatch:d83d; us:de02 umatch:de02
+            var uData = match.replace(/(\S{4})/g, function (us, umatch) {
+                return '\\u' + umatch;
+            });
+
+            // unicode 转中文，可以在 web 中显示 web 版 emoji
+            var zh = eval("'" + uData + "'");
+
+            // 是否只在 pc 端进行 emoji 的转换
+            // 移动端对于 emoji 的显示会有差异性（ios android emoji 识别不同）
+            // if (!browser.versions.ios && !browser.versions.android) {
+
+            // replaces \u{1F604} with platform appropriate content
+            var output = emoji.replace_unified(zh);
+            return output;
+
+            // } else {
+            //    return zh;
+            // }
+        });
+        return newData;
+    }
+
+    // 方法调用
+    // 处理某段 html 内容
+    var $content = $('.content .info');
+    $content.html(emojiTransfer($content.html()));
+
+
+    function messageActionBegin() {
+        $.ajax({
+            type: 'POST',
+            url: serviceUrl + "/messageActionBegin",
+            async: false,
+            dataType: 'json',
+            data: {"faQiRenOpenId": faQiRenOpenId, "bangKanOpenId": bangKanOpenId},
+            success: function (data) {
+                if (null != data.remark) {
+                    alert(data.remark)
+                    $("#kanJia").html("您为您的朋友砍下了!" + data.price + "元");
+                    return;
+                }
+                $("#kanJia").html("恭喜您为您的朋友砍下了!" + data.price + "元");
+
+            }
+        });
+    }
+
+</script>
+</head>
+
+
+<!--🌹🍀🍎💰📱🌙🍁🍂🍃🌷💎 🏀⚽⚡👄👍🔥-->
+<!--😀😁😂😃😄😅😆😉😊😋😎😍😘😗😙😚☺😇😐😑😶😏😣😥😮😯😪😫😴😌😛😜😝😒😓😔😕😲😷😖😞😟😤😢😭😦😧😨😬😰😱😳😵😡😠-->
+<!--🧧 👋👏👐✍  🎕  🎁 -->
+
+<div id="code"></div>
+<div style="font-size:30px; background-color:mediumaquamarine;">
+    </tr>
+    <p id="kanJia"></p>
+    <span class="info">
+        🔥🔥🔥🔥《家居品牌广场》🔥🔥🔥🔥</br>
+        年中大促！😎 </br>
+        6月23日-7月12日  🎕🎕🎕</br>
+        年中大促！价格回到十年前</br>
+        双凤新品布艺软床2380元 🧧 🎁 </br>
+        客厅12件套只要6880元 🧧 🎁 </br>
+        1.8米大床+床垫1680元 🧧 🎁</br>
+        皇玛康之家沙发5380元 </br>
+
+        买家具送豪礼</br>
+        砸金蛋中2999元现金大奖（100%中奖）🏆 🏆 </br>
+        更多详情进店咨询</br>
+        地址：丹江口市丹二路财富广场负一楼原（双凤家居）</br>
+        电话：13733588339 0719-5071915 📱 </br>
+        另诚聘导购数名</br>
+        </span>
+</div>
+
+
+</body>
+</html>

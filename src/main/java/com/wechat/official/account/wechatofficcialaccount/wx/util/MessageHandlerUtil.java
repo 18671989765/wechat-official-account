@@ -119,9 +119,8 @@ public class MessageHandlerUtil {
         // 消息内容
         String content = map.get("Content");
         switch (content) {
-            case "文本":
-                String msgText = "帮我砍砍价\n" +
-                        "<a href=+"+WaChatAppIdInfos.serviceUrl+"/index>砍价</a>";
+            case "消息":
+                String msgText = "好家居又有新消息了"+"<a href="+WaChatAppIdInfos.serviceUrl+"/message>好家居又有新消息了..</a>";
                 responseMessage = buildTextMessage(map, msgText);
                 break;
             case "图片":
@@ -160,6 +159,8 @@ public class MessageHandlerUtil {
         //返回响应消息
         return responseMessage;
     }
+
+
 
     /**
      * 生成消息创建时间 （整型）
