@@ -23,7 +23,7 @@
                     $("#kanJia").html("您为您的朋友砍下了!" + data.price + "元");
                     return;
                 }
-                $("#kanJia").html("恭喜您为您的朋友砍下了!" + data.price + "元");
+                $("#kanJia").html("恭喜您为您的朋友砍下了!" + data.price + "元").color("red");
 
             }
         });
@@ -31,15 +31,19 @@
 
 </script>
 </head>
-
-
-<body class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
-<marquee><span style="font-weight: bolder;font-size: 40px;color: white;">我在均州一路，好家居商城买了家具，帮我砍个价</span></marquee>
-
-<h3>丹江口均州一路好家居商场</h3>
-
-
+<body>
 <div>
+    <img class="back" style=" background-repeat:no-repeat ;background-size:100% 100%; background-attachment: fixed;">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg">
+
+    <marquee direction="left" behavior="scroll" scrolldelay="10" height="120">
+        <font face="隶书" color="red" size="8">我在均州一路，好家居商城买了家具，帮我砍个价</font>
+    </marquee>
+
+    </img>
+    <h1>丹江口均州一路好家居商场</h1>
+
+
     <div>
         </tr>
         <p id="kanJia"></p>
@@ -48,34 +52,10 @@
         <i class="flash-across"></i>
     </button>
 </div>
-
 </body>
 
 <style>
 
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
-
-    body {
-        background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        -webkit-background-size: 100% 100%;
-        background-attachment: fixed;
-        -webkit-background-attachment: fixed;
-    }
-
-    .kanjiabutton {
-        　　background-img: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600274857364&di=786c71759bd86b7179534fa9073e2571&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201605%2F19%2F20160519090014_hLkTi.jpeg);
-
-        background-size: cover;
-
-        background-size: contain;
-
-        background-size: 100%;
-    }
 
     @keyframes changeImg {
         from {
@@ -100,23 +80,24 @@
 
 
     .kanjiabutton {
-        width: 200px;
-        height: 40px;
+        width: 250px;
+        height: 100px;
         border-width: 0px;
         border-radius: 3px;
         background: red;
         cursor: pointer;
         outline: none;
         font-family: Microsoft YaHei;
-        color: #3c5fff;
-        font-size: 17px;
+        color: #4a60ff;
+        font-size: 30px;
         position: relative;
-        top: 440px;
-        left: 500px;
+        top: 50px;
+        left: 430px;
+        margin-top: 50px;
     }
 
     .kanjiabutton:hover {
-        background: #fff3ec;
+        background: #ff365b;
     }
 
 </style>

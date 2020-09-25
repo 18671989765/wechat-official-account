@@ -83,6 +83,11 @@ public class IndexController {
         return new ModelAndView("message", map);
     }
 
+    @GetMapping("/code")
+    public String code(){
+        return "erweima";
+    }
+
 
     /**
      * 读取request中传过来的字符串
