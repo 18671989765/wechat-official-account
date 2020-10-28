@@ -6,7 +6,7 @@ import lombok.Data;
  * @author Administrator
  * @version 1.0
  * @date 2020/9/13 22:03
- * 点击砍价需要传递的信息
+ * 点击砍价需要传递的信息  测试
  */
 @Data
 public class InitiateBargainingDto {
